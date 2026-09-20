@@ -1,0 +1,13 @@
+{
+  "Garden Public": "local_florist",
+  "Garden Private": "home_and_garden",
+  "Garden Center": "potted_plant",
+  "Grocery Store": "shopping_cart",
+  "Farm": "agriculture",
+  "Community": "holiday_village",
+  "Health Center": "home_health",
+  "School": "school",
+  "Park": "nordic_walking",
+  "Eatery": "restaurant",
+  "Other": "radio_button_unchecked"
+}
