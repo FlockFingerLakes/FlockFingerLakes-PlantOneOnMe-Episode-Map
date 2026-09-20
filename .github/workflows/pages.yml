@@ -34,7 +34,7 @@ jobs:
         env:
           GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
         run: |
-          printf 'window.MAP_CONFIG = { googleMapsApiKey: "%s" };\n' "$GOOGLE_MAPS_API_KEY" > config.js
+          printf 'window.MAP_CONFIG = { GOOGLE_MAPS_API_KEY: "%s" };\n' "$GOOGLE_MAPS_API_KEY" > config.js
 
       - name: Upload site
         uses: actions/upload-pages-artifact@v3
