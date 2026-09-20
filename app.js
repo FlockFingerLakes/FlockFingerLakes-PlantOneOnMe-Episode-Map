@@ -538,6 +538,7 @@ state.map = new google.maps.Map(
     mapTypeControl: true,
     gestureHandling: "greedy",
     clickableIcons: false
+    mapId: "DEMO_MAP_ID"
   }
 );
 
