@@ -526,21 +526,21 @@ async function main() {
 
   await loadGoogleMaps();
 
-state.map = new google.maps.Map(
-  document.querySelector("#map"),
-  {
-    center: FINGER_LAKES,
-    zoom: FINGER_LAKES.zoom,
-    mapTypeId: "terrain",
-    styles: HIDE_POI,
-    fullscreenControl: true,
-    streetViewControl: false,
-    mapTypeControl: true,
-    gestureHandling: "greedy",
-    clickableIcons: false
-    mapId: "DEMO_MAP_ID"
-  }
-);
+  state.map = new google.maps.Map(
+    document.querySelector("#map"),
+    {
+      center: FINGER_LAKES,
+      zoom: FINGER_LAKES.zoom,
+      mapTypeId: "terrain",
+      styles: HIDE_POI,
+      fullscreenControl: true,
+      streetViewControl: false,
+      mapTypeControl: true,
+      gestureHandling: "greedy",
+      clickableIcons: false,
+      mapId: "DEMO_MAP_ID"
+    }
+  );
 
   state.info = new google.maps.InfoWindow();
 
