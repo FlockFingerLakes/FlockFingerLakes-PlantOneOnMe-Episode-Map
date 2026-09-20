@@ -1,5 +1,11 @@
 const FINGER_LAKES = { lat: 42.60, lng: -76.95, zoom: 8.7 };
 
+// Google Maps IDs
+// OFF uses the cloud style where Points of Interest are hidden.
+// ON uses Google's default style where Points of Interest are visible.
+const MAP_ID_DESTINATIONS_OFF = "39e3e5d57f6a3b577a866c0a";
+const MAP_ID_DESTINATIONS_ON = "39e3e5d57f6a3b5794f5fdf2";
+
 const state = {
   map: null,
   locations: [],
@@ -8,10 +14,6 @@ const state = {
   markers: [],
   info: null
 };
-
-const HIDE_POI = [
-  { featureType: "poi", stylers: [{ visibility: "off" }] }
-];
 
 /*
  * Airtable single-select color -> map marker color.
@@ -457,6 +459,55 @@ function fitAll() {
   }
 }
 
+function createMap(mapId, view = {}) {
+  state.map = new google.maps.Map(
+    document.querySelector("#map"),
+    {
+      center: view.center || FINGER_LAKES,
+      zoom: view.zoom ?? FINGER_LAKES.zoom,
+      mapTypeId: view.mapTypeId || "terrain",
+      fullscreenControl: true,
+      streetViewControl: false,
+      mapTypeControl: true,
+      gestureHandling: "greedy",
+      clickableIcons: view.clickableIcons ?? false,
+      mapId
+    }
+  );
+
+  state.info = new google.maps.InfoWindow();
+}
+
+function switchDestinations(showDestinations) {
+  const center = state.map?.getCenter();
+  const zoom = state.map?.getZoom();
+  const mapTypeId = state.map?.getMapTypeId() || "terrain";
+
+  const view = {
+    center: center
+      ? { lat: center.lat(), lng: center.lng() }
+      : FINGER_LAKES,
+    zoom: zoom ?? FINGER_LAKES.zoom,
+    mapTypeId,
+    clickableIcons: showDestinations
+  };
+
+  clearMarkers();
+
+  if (state.info) {
+    state.info.close();
+  }
+
+  createMap(
+    showDestinations
+      ? MAP_ID_DESTINATIONS_ON
+      : MAP_ID_DESTINATIONS_OFF,
+    view
+  );
+
+  render();
+}
+
 function loadGoogleMaps() {
   return new Promise((resolve, reject) => {
     const key = window.MAP_CONFIG?.GOOGLE_MAPS_API_KEY;
@@ -526,23 +577,12 @@ async function main() {
 
   await loadGoogleMaps();
 
-  state.map = new google.maps.Map(
-    document.querySelector("#map"),
-    {
-      center: FINGER_LAKES,
-      zoom: FINGER_LAKES.zoom,
-      mapTypeId: "terrain",
-      styles: HIDE_POI,
-      fullscreenControl: true,
-      streetViewControl: false,
-      mapTypeControl: true,
-      gestureHandling: "greedy",
-      clickableIcons: false,
-      mapId: "DEMO_MAP_ID"
-    }
-  );
-
-  state.info = new google.maps.InfoWindow();
+  createMap(MAP_ID_DESTINATIONS_OFF, {
+    center: FINGER_LAKES,
+    zoom: FINGER_LAKES.zoom,
+    mapTypeId: "terrain",
+    clickableIcons: false
+  });
 
   render();
 
@@ -553,10 +593,7 @@ async function main() {
   document
     .querySelector("#placesToggle")
     .addEventListener("change", e => {
-      state.map.setOptions({
-        styles: e.target.checked ? [] : HIDE_POI,
-        clickableIcons: e.target.checked
-      });
+      switchDestinations(e.target.checked);
     });
 
   document
