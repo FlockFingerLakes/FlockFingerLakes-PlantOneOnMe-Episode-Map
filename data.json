@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20T20:34:44.997595+00:00",
+  "updatedAt": "2026-09-20T20:38:44.330934+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -19,7 +19,7 @@
   "categories": [
     {
       "name": "Community",
-      "airtableColor": "yellowLight1",
+      "airtableColor": "yellowBright",
       "sources": [
         "flock",
         "poom"
@@ -27,7 +27,7 @@
     },
     {
       "name": "Eatery",
-      "airtableColor": "purpleLight1",
+      "airtableColor": "purpleBright",
       "sources": [
         "flock",
         "poom"
@@ -35,7 +35,7 @@
     },
     {
       "name": "Farm",
-      "airtableColor": "greenLight1",
+      "airtableColor": "greenBright",
       "sources": [
         "flock",
         "poom"
@@ -43,7 +43,7 @@
     },
     {
       "name": "Garden Center",
-      "airtableColor": "greenLight1",
+      "airtableColor": "greenBright",
       "sources": [
         "flock",
         "poom"
@@ -51,7 +51,7 @@
     },
     {
       "name": "Garden Private",
-      "airtableColor": "greenLight1",
+      "airtableColor": "greenBright",
       "sources": [
         "flock",
         "poom"
@@ -59,7 +59,7 @@
     },
     {
       "name": "Garden Public",
-      "airtableColor": "greenLight1",
+      "airtableColor": "greenBright",
       "sources": [
         "flock",
         "poom"
@@ -67,7 +67,7 @@
     },
     {
       "name": "Grocery Store",
-      "airtableColor": "blueLight1",
+      "airtableColor": "blueBright",
       "sources": [
         "flock",
         "poom"
@@ -75,7 +75,7 @@
     },
     {
       "name": "Health Center",
-      "airtableColor": "redLight1",
+      "airtableColor": "redBright",
       "sources": [
         "flock",
         "poom"
@@ -83,7 +83,7 @@
     },
     {
       "name": "Other",
-      "airtableColor": "grayLight1",
+      "airtableColor": "grayBright",
       "sources": [
         "flock",
         "poom"
@@ -91,7 +91,7 @@
     },
     {
       "name": "Park",
-      "airtableColor": "greenLight1",
+      "airtableColor": "greenBright",
       "sources": [
         "flock",
         "poom"
@@ -99,7 +99,7 @@
     },
     {
       "name": "School",
-      "airtableColor": "yellowLight1",
+      "airtableColor": "yellowBright",
       "sources": [
         "flock",
         "poom"
