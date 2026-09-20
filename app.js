@@ -1,36 +1,579 @@
-const FINGER_LAKES={lat:42.60,lng:-76.95,zoom:8.7};
-const state={map:null,locations:[],markers:[],info:null};
-const COLORS={green:"#2E7D32",red:"#D93025",yellow:"#F9AB00",blue:"#1A73E8",purple:"#9334E6",grey:"#6B7280"};
-const PIN_STYLES={
- "garden public":{icon:"flower",color:COLORS.green,label:"Garden Public"},
- "garden private":{icon:"flower",color:COLORS.green,label:"Garden Private"},
- "garden center":{icon:"greenhouse",color:COLORS.green,label:"Garden Center"},
- "garden nursery":{icon:"greenhouse",color:COLORS.green,label:"Garden Nursery"},
- "farm":{icon:"farm",color:COLORS.red,label:"Farm"},
- "community":{icon:"house",color:COLORS.yellow,label:"Community"},
- "health center":{icon:"medical",color:COLORS.red,label:"Health Center"},
- "school":{icon:"school",color:COLORS.yellow,label:"School"},
- "trails":{icon:"waterfall",color:COLORS.blue,label:"Trails"},
- "eatery":{icon:"eatery",color:COLORS.purple,label:"Eatery"},
- "other":{icon:"pin",color:COLORS.grey,label:"Other"}
+const FINGER_LAKES = { lat: 42.60, lng: -76.95, zoom: 8.7 };
+
+const state = {
+  map: null,
+  locations: [],
+  categories: [],
+  categoryIcons: {},
+  markers: [],
+  info: null
 };
-const HIDE_POI=[{featureType:"poi",stylers:[{visibility:"off"}]}];
-function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;")}
-function norm(v){return String(v||"Other").trim().toLowerCase().replace(/[^a-z0-9]+/g," ").trim()}
-function styleFor(v){return PIN_STYLES[norm(v)]||PIN_STYLES.other}
-function youtubeId(url){try{const u=new URL(url);if(u.hostname==="youtu.be")return u.pathname.slice(1).split(/[/?#]/)[0];if(u.hostname.includes("youtube.com")){if(u.pathname==="/watch")return u.searchParams.get("v");if(u.pathname.startsWith("/shorts/")||u.pathname.startsWith("/embed/"))return u.pathname.split("/")[2]}}catch(_){}const m=String(url||"").match(/(?:v=|youtu\.be\/|\/shorts\/|\/embed\/)([A-Za-z0-9_-]{6,})/);return m?m[1]:null}
-function selectedChannels(){const s=new Set();if(document.querySelector("#flockToggle").checked)s.add("flock");if(document.querySelector("#poomToggle").checked)s.add("poom");return s}
-function visibleLocations(){const s=selectedChannels();return state.locations.filter(x=>s.has(x.channel))}
-function groupLocations(items){const m=new Map();for(const x of items){const key=`${Number(x.lat).toFixed(6)},${Number(x.lng).toFixed(6)}`;if(!m.has(key))m.set(key,{key,lat:Number(x.lat),lng:Number(x.lng),episodes:[],address:"",addressStreet:"",addressTown:"",addressState:"",addressZip:"",addressCountry:""});const g=m.get(key);g.episodes.push(x);if(!g.address&&x.address){Object.assign(g,{address:x.address,addressStreet:x.addressStreet,addressTown:x.addressTown,addressState:x.addressState,addressZip:x.addressZip,addressCountry:x.addressCountry})}}return [...m.values()]}
-function groupStyle(g){const cats=[...new Set(g.episodes.map(e=>norm(e.mapCategory)))];return cats.length===1?styleFor(cats[0]):PIN_STYLES.other}
-function addressHtml(g){const lines=[];if(g.addressStreet)lines.push(`<div>${esc(g.addressStreet)}</div>`);let city=[g.addressTown,g.addressState].filter(Boolean).join(", ");if(g.addressZip)city+=(city?" ":"")+g.addressZip;if(city)lines.push(`<div>${esc(city)}</div>`);if(g.addressCountry)lines.push(`<div>${esc(g.addressCountry)}</div>`);return lines.join("")}
-function episodeHtml(e){const st=styleFor(e.mapCategory), id=youtubeId(e.youtubeLink);return `<div class="episode-card" style="--episode-color:${st.color}"><div class="episode-card-header"><div><div class="episode-card-title">${esc(e.episodeName||"Video")}</div><div class="channel-label">${esc(e.channelLabel)}</div></div><div class="episode-category">${esc(st.label)}</div></div>${id?`<div class="video-wrap"><iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0" title="${esc(e.episodeName||"Video")}" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>`:""}<div class="episode-links">${e.youtubeLink?`<a href="${esc(e.youtubeLink)}" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a>`:""}</div></div>`}
-function popupHtml(g){const count=g.episodes.length;const maps=g.address?`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.address)}`:`https://www.google.com/maps/search/?api=1&query=${g.lat},${g.lng}`;return `<div class="info-window"><div class="location-popup-title">${count===1?"Video Location":`${count} Episodes at This Location`}</div>${addressHtml(g)?`<div class="location-address">${addressHtml(g)}</div>`:""}<a class="location-map-link" href="${maps}" target="_blank" rel="noopener noreferrer">Navigate to this address in Google Maps ↗</a><div class="episode-list">${g.episodes.map(episodeHtml).join("")}</div></div>`}
-function svgPath(icon){const paths={flower:'<circle cx="24" cy="16" r="5"/><circle cx="16" cy="24" r="5"/><circle cx="32" cy="24" r="5"/><circle cx="24" cy="32" r="5"/><circle cx="24" cy="24" r="4"/><path d="M24 34v9M24 39c-5-4-8-3-10-1 4 4 7 5 10 4M24 39c5-4 8-3 10-1-4 4-7 5-10 4"/>',greenhouse:'<path d="M10 42V22L24 8l14 14v20H10zm7 0V25h14v17M10 22h28M24 8v34"/>',farm:'<path d="M8 42V21l16-11 16 11v21M14 42V28h20v14M19 42V32h10v10M8 21h32"/>',house:'<path d="M8 25 24 11l16 14v17H29V31H19v11H8V25z"/>',medical:'<path d="M19 10h10v9h9v10h-9v9H19v-9h-9V19h9v-9z"/>',school:'<path d="M7 19 24 9l17 10-17 10L7 19zm6 7v12h22V26M24 29v9"/>',waterfall:'<path d="M8 38c5-5 9-5 14 0s9 5 14 0M10 30c4-4 7-4 11 0s7 4 11 0M16 9h16l-4 9H17l-1-9zm3 9v8m6-8v10"/>',eatery:'<path d="M13 8v14M9 8v8c0 4 8 4 8 0V8M13 22v20M31 8v34M31 8c7 5 7 15 0 18"/>',pin:'<circle cx="24" cy="21" r="8"/><path d="M24 45s14-14 14-25a14 14 0 1 0-28 0c0 11 14 25 14 25z"/>'};return paths[icon]||paths.pin}
-function markerIcon(st){const svg=`<svg xmlns="http://www.w3.org/2000/svg" width="52" height="62" viewBox="0 0 52 62"><path fill="${st.color}" stroke="white" stroke-width="2.5" d="M26 2C13 2 4 11 4 24c0 17 22 36 22 36s22-19 22-36C48 11 39 2 26 2z"/><g transform="translate(2 1) scale(.92)" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">${svgPath(st.icon)}</g></svg>`;return {url:`data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`,scaledSize:new google.maps.Size(42,50),anchor:new google.maps.Point(21,50)} }
-function clearMarkers(){for(const m of state.markers)m.setMap(null);state.markers=[]}
-function render(){clearMarkers();if(state.info)state.info.close();const groups=groupLocations(visibleLocations());for(const g of groups){const st=groupStyle(g);const marker=new google.maps.Marker({map:state.map,position:{lat:g.lat,lng:g.lng},title:g.episodes.length===1?g.episodes[0].episodeName:`${g.episodes.length} episodes`,icon:markerIcon(st),label:g.episodes.length>1?{text:String(g.episodes.length),color:"white",fontSize:"10px",fontWeight:"700"}:undefined});marker.addListener("click",()=>{state.info.setContent(popupHtml(g));state.info.open({map:state.map,anchor:marker})});state.markers.push(marker)}document.querySelector("#status").textContent=`${state.markers.length} filming locations • ${visibleLocations().length} episodes`}
-function fitAll(){if(!state.markers.length)return;const b=new google.maps.LatLngBounds();for(const m of state.markers)b.extend(m.getPosition());state.map.fitBounds(b,70);if(state.markers.length===1)state.map.setZoom(12)}
-function loadGoogleMaps(){return new Promise((resolve,reject)=>{const key=window.MAP_CONFIG?.GOOGLE_MAPS_API_KEY;if(!key||key==="REPLACE_ME")return reject(new Error("Google Maps API key is not configured."));window.__initMap=resolve;const s=document.createElement("script");s.src=`https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(key)}&callback=__initMap&v=weekly`;s.async=true;s.onerror=()=>reject(new Error("Google Maps failed to load."));document.head.appendChild(s)})}
-async function main(){const data=await fetch(`data.json?v=${Date.now()}`,{cache:"no-store"}).then(r=>{if(!r.ok)throw new Error("Could not load data.json.");return r.json()});state.locations=(data.locations||[]).filter(x=>Number.isFinite(Number(x.lat))&&Number.isFinite(Number(x.lng)));await loadGoogleMaps();state.map=new google.maps.Map(document.querySelector("#map"),{center:FINGER_LAKES,zoom:FINGER_LAKES.zoom,mapTypeId:"terrain",styles:HIDE_POI,fullscreenControl:true,streetViewControl:false,mapTypeControl:true,gestureHandling:"greedy",clickableIcons:false});state.info=new google.maps.InfoWindow();render();document.querySelectorAll("#flockToggle,#poomToggle").forEach(x=>x.addEventListener("change",render));document.querySelector("#placesToggle").addEventListener("change",e=>state.map.setOptions({styles:e.target.checked?[]:HIDE_POI,clickableIcons:e.target.checked}));document.querySelector("#fingerLakesBtn").addEventListener("click",()=>{state.map.setCenter(FINGER_LAKES);state.map.setZoom(FINGER_LAKES.zoom)});document.querySelector("#allLocationsBtn").addEventListener("click",fitAll)}
-main().catch(err=>{document.querySelector("#error").hidden=false;document.querySelector("#error").textContent=err.message;document.querySelector("#status").textContent="Map unavailable";console.error(err)});
+
+const HIDE_POI = [
+  { featureType: "poi", stylers: [{ visibility: "off" }] }
+];
+
+/*
+ * Airtable single-select color -> map marker color.
+ * These are approximate web equivalents of Airtable's palette.
+ */
+const AIRTABLE_COLORS = {
+  blueLight2: "#C6E2FF",
+  cyanLight2: "#C4ECF7",
+  tealLight2: "#C8F1E4",
+  greenLight2: "#D1F2C4",
+  yellowLight2: "#FFEAB6",
+  orangeLight2: "#FFD4B8",
+  redLight2: "#FFD1CC",
+  pinkLight2: "#F8D4E8",
+  purpleLight2: "#E5D5F5",
+  grayLight2: "#E2E2E2",
+
+  blueLight1: "#9CC7FF",
+  cyanLight1: "#8ED7E8",
+  tealLight1: "#8ADBC1",
+  greenLight1: "#A7E68F",
+  yellowLight1: "#FFDA7A",
+  orangeLight1: "#FFB77D",
+  redLight1: "#FFA39A",
+  pinkLight1: "#F4A6CF",
+  purpleLight1: "#C9A6E8",
+  grayLight1: "#C4C4C4",
+
+  blueBright: "#2D7FF9",
+  cyanBright: "#18BFFF",
+  tealBright: "#20C997",
+  greenBright: "#20C933",
+  yellowBright: "#F7C948",
+  orangeBright: "#FF8C42",
+  redBright: "#F82B60",
+  pinkBright: "#F65CC6",
+  purpleBright: "#8B46FF",
+  grayBright: "#666666",
+
+  blueDark1: "#1B5DBF",
+  cyanDark1: "#0B87A6",
+  tealDark1: "#147D64",
+  greenDark1: "#1F7A34",
+  yellowDark1: "#B88700",
+  orangeDark1: "#B85B16",
+  redDark1: "#B51E3D",
+  pinkDark1: "#A83283",
+  purpleDark1: "#5B2A9D",
+  grayDark1: "#444444"
+};
+
+function esc(v) {
+  return String(v ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function norm(v) {
+  return String(v || "Other")
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+}
+
+function categoryConfig(categoryName) {
+  const wanted = norm(categoryName);
+
+  return state.categories.find(
+    c => norm(c.name) === wanted
+  ) || null;
+}
+
+function categoryColor(categoryName) {
+  const category = categoryConfig(categoryName);
+
+  if (!category) {
+    const other = categoryConfig("Other");
+    if (other) {
+      return AIRTABLE_COLORS[other.airtableColor] || "#666666";
+    }
+    return "#666666";
+  }
+
+  return AIRTABLE_COLORS[category.airtableColor] || "#666666";
+}
+
+function categoryIcon(categoryName) {
+  const exact = state.categoryIcons[categoryName];
+
+  if (exact) return exact;
+
+  const wanted = norm(categoryName);
+
+  const matchingKey = Object.keys(state.categoryIcons).find(
+    key => norm(key) === wanted
+  );
+
+  if (matchingKey) return state.categoryIcons[matchingKey];
+
+  return state.categoryIcons.Other || "radio_button_unchecked";
+}
+
+function styleFor(categoryName) {
+  const category = categoryConfig(categoryName);
+
+  return {
+    icon: categoryIcon(categoryName),
+    color: categoryColor(categoryName),
+    label: category?.name || categoryName || "Other"
+  };
+}
+
+function youtubeId(url) {
+  try {
+    const u = new URL(url);
+
+    if (u.hostname === "youtu.be") {
+      return u.pathname.slice(1).split(/[/?#]/)[0];
+    }
+
+    if (u.hostname.includes("youtube.com")) {
+      if (u.pathname === "/watch") return u.searchParams.get("v");
+
+      if (
+        u.pathname.startsWith("/shorts/") ||
+        u.pathname.startsWith("/embed/")
+      ) {
+        return u.pathname.split("/")[2];
+      }
+    }
+  } catch (_) {}
+
+  const m = String(url || "").match(
+    /(?:v=|youtu\.be\/|\/shorts\/|\/embed\/)([A-Za-z0-9_-]{6,})/
+  );
+
+  return m ? m[1] : null;
+}
+
+function selectedChannels() {
+  const s = new Set();
+
+  if (document.querySelector("#flockToggle").checked) s.add("flock");
+  if (document.querySelector("#poomToggle").checked) s.add("poom");
+
+  return s;
+}
+
+function visibleLocations() {
+  const s = selectedChannels();
+  return state.locations.filter(x => s.has(x.channel));
+}
+
+function groupLocations(items) {
+  const m = new Map();
+
+  for (const x of items) {
+    const key =
+      `${Number(x.lat).toFixed(6)},${Number(x.lng).toFixed(6)}`;
+
+    if (!m.has(key)) {
+      m.set(key, {
+        key,
+        lat: Number(x.lat),
+        lng: Number(x.lng),
+        episodes: [],
+        address: "",
+        addressStreet: "",
+        addressTown: "",
+        addressState: "",
+        addressZip: "",
+        addressCountry: ""
+      });
+    }
+
+    const g = m.get(key);
+    g.episodes.push(x);
+
+    if (!g.address && x.address) {
+      Object.assign(g, {
+        address: x.address,
+        addressStreet: x.addressStreet,
+        addressTown: x.addressTown,
+        addressState: x.addressState,
+        addressZip: x.addressZip,
+        addressCountry: x.addressCountry
+      });
+    }
+  }
+
+  return [...m.values()];
+}
+
+function groupStyle(g) {
+  const cats = [
+    ...new Set(g.episodes.map(e => norm(e.mapCategory)))
+  ];
+
+  if (cats.length === 1) {
+    return styleFor(g.episodes[0].mapCategory);
+  }
+
+  return styleFor("Other");
+}
+
+function addressHtml(g) {
+  const lines = [];
+
+  if (g.addressStreet) {
+    lines.push(`<div>${esc(g.addressStreet)}</div>`);
+  }
+
+  let city = [g.addressTown, g.addressState]
+    .filter(Boolean)
+    .join(", ");
+
+  if (g.addressZip) {
+    city += (city ? " " : "") + g.addressZip;
+  }
+
+  if (city) {
+    lines.push(`<div>${esc(city)}</div>`);
+  }
+
+  if (g.addressCountry) {
+    lines.push(`<div>${esc(g.addressCountry)}</div>`);
+  }
+
+  return lines.join("");
+}
+
+function episodeHtml(e) {
+  const st = styleFor(e.mapCategory);
+  const id = youtubeId(e.youtubeLink);
+
+  return `
+    <div class="episode-card" style="--episode-color:${st.color}">
+      <div class="episode-card-header">
+        <div>
+          <div class="episode-card-title">
+            ${esc(e.episodeName || "Video")}
+          </div>
+          <div class="channel-label">
+            ${esc(e.channelLabel)}
+          </div>
+        </div>
+        <div class="episode-category">
+          ${esc(st.label)}
+        </div>
+      </div>
+
+      ${
+        id
+          ? `<div class="video-wrap">
+              <iframe
+                src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0"
+                title="${esc(e.episodeName || "Video")}"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>`
+          : ""
+      }
+
+      <div class="episode-links">
+        ${
+          e.youtubeLink
+            ? `<a href="${esc(e.youtubeLink)}"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                 Watch on YouTube ↗
+               </a>`
+            : ""
+        }
+      </div>
+    </div>
+  `;
+}
+
+function popupHtml(g) {
+  const count = g.episodes.length;
+
+  const maps = g.address
+    ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(g.address)}`
+    : `https://www.google.com/maps/search/?api=1&query=${g.lat},${g.lng}`;
+
+  return `
+    <div class="info-window">
+      <div class="location-popup-title">
+        ${count === 1
+          ? "Video Location"
+          : `${count} Episodes at This Location`}
+      </div>
+
+      ${
+        addressHtml(g)
+          ? `<div class="location-address">${addressHtml(g)}</div>`
+          : ""
+      }
+
+      <a class="location-map-link"
+         href="${maps}"
+         target="_blank"
+         rel="noopener noreferrer">
+        Navigate to this address in Google Maps ↗
+      </a>
+
+      <div class="episode-list">
+        ${g.episodes.map(episodeHtml).join("")}
+      </div>
+    </div>
+  `;
+}
+
+/*
+ * Build our marker as SVG.
+ * The category symbol itself comes from Google's Material Symbols font.
+ */
+function markerElement(st, count) {
+  const wrapper = document.createElement("div");
+  wrapper.className = "custom-map-marker";
+
+  wrapper.style.position = "relative";
+  wrapper.style.width = "42px";
+  wrapper.style.height = "50px";
+  wrapper.style.transform = "translateY(-25px)";
+
+  const pin = document.createElement("div");
+
+  pin.style.width = "42px";
+  pin.style.height = "42px";
+  pin.style.background = st.color;
+  pin.style.border = "2.5px solid white";
+  pin.style.borderRadius = "50% 50% 50% 0";
+  pin.style.transform = "rotate(-45deg)";
+  pin.style.boxSizing = "border-box";
+  pin.style.boxShadow = "0 1px 4px rgba(0,0,0,.35)";
+  pin.style.display = "flex";
+  pin.style.alignItems = "center";
+  pin.style.justifyContent = "center";
+
+  const symbol = document.createElement("span");
+  symbol.className = "material-symbols-rounded";
+  symbol.textContent = st.icon;
+
+  symbol.style.transform = "rotate(45deg)";
+  symbol.style.color = "white";
+  symbol.style.fontSize = "23px";
+  symbol.style.fontWeight = "500";
+  symbol.style.fontVariationSettings =
+    "'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24";
+
+  pin.appendChild(symbol);
+  wrapper.appendChild(pin);
+
+  if (count > 1) {
+    const badge = document.createElement("div");
+
+    badge.textContent = String(count);
+    badge.style.position = "absolute";
+    badge.style.right = "-7px";
+    badge.style.top = "-7px";
+    badge.style.minWidth = "20px";
+    badge.style.height = "20px";
+    badge.style.padding = "0 4px";
+    badge.style.boxSizing = "border-box";
+    badge.style.borderRadius = "10px";
+    badge.style.background = "#202124";
+    badge.style.color = "white";
+    badge.style.border = "2px solid white";
+    badge.style.font = "700 10px/16px Arial, sans-serif";
+    badge.style.textAlign = "center";
+
+    wrapper.appendChild(badge);
+  }
+
+  return wrapper;
+}
+
+function clearMarkers() {
+  for (const m of state.markers) {
+    m.map = null;
+  }
+
+  state.markers = [];
+}
+
+function render() {
+  clearMarkers();
+
+  if (state.info) state.info.close();
+
+  const groups = groupLocations(visibleLocations());
+
+  for (const g of groups) {
+    const st = groupStyle(g);
+
+    const marker = new google.maps.marker.AdvancedMarkerElement({
+      map: state.map,
+      position: { lat: g.lat, lng: g.lng },
+      title:
+        g.episodes.length === 1
+          ? g.episodes[0].episodeName
+          : `${g.episodes.length} episodes`,
+      content: markerElement(st, g.episodes.length)
+    });
+
+    marker.addListener("click", () => {
+      state.info.setContent(popupHtml(g));
+
+      state.info.open({
+        map: state.map,
+        anchor: marker
+      });
+    });
+
+    state.markers.push(marker);
+  }
+
+  document.querySelector("#status").textContent =
+    `${state.markers.length} filming locations • ` +
+    `${visibleLocations().length} episodes`;
+}
+
+function fitAll() {
+  if (!state.markers.length) return;
+
+  const b = new google.maps.LatLngBounds();
+
+  for (const m of state.markers) {
+    if (m.position) b.extend(m.position);
+  }
+
+  state.map.fitBounds(b, 70);
+
+  if (state.markers.length === 1) {
+    state.map.setZoom(12);
+  }
+}
+
+function loadGoogleMaps() {
+  return new Promise((resolve, reject) => {
+    const key = window.MAP_CONFIG?.GOOGLE_MAPS_API_KEY;
+
+    if (!key || key === "REPLACE_ME") {
+      return reject(
+        new Error("Google Maps API key is not configured.")
+      );
+    }
+
+    window.__initMap = resolve;
+
+    const s = document.createElement("script");
+
+    s.src =
+      `https://maps.googleapis.com/maps/api/js` +
+      `?key=${encodeURIComponent(key)}` +
+      `&callback=__initMap` +
+      `&libraries=marker` +
+      `&v=weekly`;
+
+    s.async = true;
+
+    s.onerror = () =>
+      reject(new Error("Google Maps failed to load."));
+
+    document.head.appendChild(s);
+  });
+}
+
+async function loadCategoryIcons() {
+  const response = await fetch(
+    `category-icons.json?v=${Date.now()}`,
+    { cache: "no-store" }
+  );
+
+  if (!response.ok) {
+    throw new Error("Could not load category-icons.json.");
+  }
+
+  return response.json();
+}
+
+async function main() {
+  const [data, categoryIcons] = await Promise.all([
+    fetch(
+      `data.json?v=${Date.now()}`,
+      { cache: "no-store" }
+    ).then(r => {
+      if (!r.ok) {
+        throw new Error("Could not load data.json.");
+      }
+      return r.json();
+    }),
+
+    loadCategoryIcons()
+  ]);
+
+  state.locations = (data.locations || []).filter(
+    x =>
+      Number.isFinite(Number(x.lat)) &&
+      Number.isFinite(Number(x.lng))
+  );
+
+  state.categories = data.categories || [];
+  state.categoryIcons = categoryIcons || {};
+
+  await loadGoogleMaps();
+
+  state.map = new google.maps.Map(
+    document.querySelector("#map"),
+    {
+      center: FINGER_LAKES,
+      zoom: FINGER_LAKES.zoom,
+      mapTypeId: "terrain",
+      styles: HIDE_POI,
+      fullscreenControl: true,
+      streetViewControl: false,
+      mapTypeControl: true,
+      gestureHandling: "greedy",
+      clickableIcons: false,
+      mapId: "DEMO_MAP_ID"
+    }
+  );
+
+  state.info = new google.maps.InfoWindow();
+
+  render();
+
+  document
+    .querySelectorAll("#flockToggle,#poomToggle")
+    .forEach(x => x.addEventListener("change", render));
+
+  document
+    .querySelector("#placesToggle")
+    .addEventListener("change", e => {
+      state.map.setOptions({
+        styles: e.target.checked ? [] : HIDE_POI,
+        clickableIcons: e.target.checked
+      });
+    });
+
+  document
+    .querySelector("#fingerLakesBtn")
+    .addEventListener("click", () => {
+      state.map.setCenter(FINGER_LAKES);
+      state.map.setZoom(FINGER_LAKES.zoom);
+    });
+
+  document
+    .querySelector("#allLocationsBtn")
+    .addEventListener("click", fitAll);
+}
+
+main().catch(err => {
+  document.querySelector("#error").hidden = false;
+  document.querySelector("#error").textContent = err.message;
+  document.querySelector("#status").textContent = "Map unavailable";
+  console.error(err);
+});
