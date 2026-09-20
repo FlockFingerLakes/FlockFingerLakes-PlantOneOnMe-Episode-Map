@@ -1,8 +1,8 @@
 const FINGER_LAKES = { lat: 42.60, lng: -76.95, zoom: 8.7 };
 
 // Google Maps IDs
-// OFF uses the cloud style where Points of Interest are hidden.
-// ON uses Google's default style where Points of Interest are visible.
+// OFF uses the cloud styles where Points of Interest are hidden.
+// ON uses Google's default styles where Points of Interest are visible.
 const MAP_ID_DESTINATIONS_OFF = "39e3e5d57f6a3b577a866c0a";
 const MAP_ID_DESTINATIONS_ON = "39e3e5d57f6a3b5794f5fdf2";
 
@@ -95,9 +95,11 @@ function categoryColor(categoryName) {
 
   if (!category) {
     const other = categoryConfig("Other");
+
     if (other) {
       return AIRTABLE_COLORS[other.airtableColor] || "#666666";
     }
+
     return "#666666";
   }
 
@@ -139,7 +141,9 @@ function youtubeId(url) {
     }
 
     if (u.hostname.includes("youtube.com")) {
-      if (u.pathname === "/watch") return u.searchParams.get("v");
+      if (u.pathname === "/watch") {
+        return u.searchParams.get("v");
+      }
 
       if (
         u.pathname.startsWith("/shorts/") ||
@@ -160,14 +164,20 @@ function youtubeId(url) {
 function selectedChannels() {
   const s = new Set();
 
-  if (document.querySelector("#flockToggle").checked) s.add("flock");
-  if (document.querySelector("#poomToggle").checked) s.add("poom");
+  if (document.querySelector("#flockToggle").checked) {
+    s.add("flock");
+  }
+
+  if (document.querySelector("#poomToggle").checked) {
+    s.add("poom");
+  }
 
   return s;
 }
 
 function visibleLocations() {
   const s = selectedChannels();
+
   return state.locations.filter(x => s.has(x.channel));
 }
 
@@ -194,6 +204,7 @@ function groupLocations(items) {
     }
 
     const g = m.get(key);
+
     g.episodes.push(x);
 
     if (!g.address && x.address) {
@@ -260,10 +271,12 @@ function episodeHtml(e) {
           <div class="episode-card-title">
             ${esc(e.episodeName || "Video")}
           </div>
+
           <div class="channel-label">
             ${esc(e.channelLabel)}
           </div>
         </div>
+
         <div class="episode-category">
           ${esc(st.label)}
         </div>
@@ -308,9 +321,11 @@ function popupHtml(g) {
   return `
     <div class="info-window">
       <div class="location-popup-title">
-        ${count === 1
-          ? "Video Location"
-          : `${count} Episodes at This Location`}
+        ${
+          count === 1
+            ? "Video Location"
+            : `${count} Episodes at This Location`
+        }
       </div>
 
       ${
@@ -339,6 +354,7 @@ function popupHtml(g) {
  */
 function markerElement(st, count) {
   const wrapper = document.createElement("div");
+
   wrapper.className = "custom-map-marker";
 
   wrapper.style.position = "relative";
@@ -361,6 +377,7 @@ function markerElement(st, count) {
   pin.style.justifyContent = "center";
 
   const symbol = document.createElement("span");
+
   symbol.className = "material-symbols-rounded";
   symbol.textContent = st.icon;
 
@@ -409,22 +426,31 @@ function clearMarkers() {
 function render() {
   clearMarkers();
 
-  if (state.info) state.info.close();
+  if (state.info) {
+    state.info.close();
+  }
 
   const groups = groupLocations(visibleLocations());
 
   for (const g of groups) {
     const st = groupStyle(g);
 
-    const marker = new google.maps.marker.AdvancedMarkerElement({
-      map: state.map,
-      position: { lat: g.lat, lng: g.lng },
-      title:
-        g.episodes.length === 1
-          ? g.episodes[0].episodeName
-          : `${g.episodes.length} episodes`,
-      content: markerElement(st, g.episodes.length)
-    });
+    const marker =
+      new google.maps.marker.AdvancedMarkerElement({
+        map: state.map,
+        position: {
+          lat: g.lat,
+          lng: g.lng
+        },
+        title:
+          g.episodes.length === 1
+            ? g.episodes[0].episodeName
+            : `${g.episodes.length} episodes`,
+        content: markerElement(
+          st,
+          g.episodes.length
+        )
+      });
 
     marker.addListener("click", () => {
       state.info.setContent(popupHtml(g));
@@ -444,12 +470,16 @@ function render() {
 }
 
 function fitAll() {
-  if (!state.markers.length) return;
+  if (!state.markers.length) {
+    return;
+  }
 
   const b = new google.maps.LatLngBounds();
 
   for (const m of state.markers) {
-    if (m.position) b.extend(m.position);
+    if (m.position) {
+      b.extend(m.position);
+    }
   }
 
   state.map.fitBounds(b, 70);
@@ -459,6 +489,12 @@ function fitAll() {
   }
 }
 
+/*
+ * Creates the Google Map.
+ *
+ * FOLLOW_SYSTEM tells Google Maps to use the visitor's
+ * light/dark operating-system preference.
+ */
 function createMap(mapId, view = {}) {
   state.map = new google.maps.Map(
     document.querySelector("#map"),
@@ -466,12 +502,17 @@ function createMap(mapId, view = {}) {
       center: view.center || FINGER_LAKES,
       zoom: view.zoom ?? FINGER_LAKES.zoom,
       mapTypeId: view.mapTypeId || "terrain",
+
       colorScheme: "FOLLOW_SYSTEM",
+
       fullscreenControl: true,
       streetViewControl: false,
       mapTypeControl: true,
       gestureHandling: "greedy",
-      clickableIcons: view.clickableIcons ?? false,
+
+      clickableIcons:
+        view.clickableIcons ?? false,
+
       mapId
     }
   );
@@ -479,18 +520,83 @@ function createMap(mapId, view = {}) {
   state.info = new google.maps.InfoWindow();
 }
 
+/*
+ * Switch between our two Map IDs when the visitor
+ * turns Google destinations on/off.
+ */
 function switchDestinations(showDestinations) {
   const center = state.map?.getCenter();
   const zoom = state.map?.getZoom();
-  const mapTypeId = state.map?.getMapTypeId() || "terrain";
+
+  const mapTypeId =
+    state.map?.getMapTypeId() || "terrain";
 
   const view = {
     center: center
-      ? { lat: center.lat(), lng: center.lng() }
+      ? {
+          lat: center.lat(),
+          lng: center.lng()
+        }
       : FINGER_LAKES,
-    zoom: zoom ?? FINGER_LAKES.zoom,
+
+    zoom:
+      zoom ?? FINGER_LAKES.zoom,
+
     mapTypeId,
-    clickableIcons: showDestinations
+
+    clickableIcons:
+      showDestinations
+  };
+
+  clearMarkers();
+
+  if (state.info) {
+    state.info.close();
+  }
+
+  createMap(
+    showDestinations
+      ? MAP_ID_DESTINATIONS_ON
+      : MAP_ID_DESTINATIONS_OFF,
+    view
+  );
+
+  render();
+}
+
+/*
+ * If the visitor changes their computer/browser
+ * appearance while the website is already open,
+ * recreate the map so FOLLOW_SYSTEM is evaluated again.
+ *
+ * Current center, zoom, map type and destinations
+ * setting are preserved.
+ */
+function switchSystemColorScheme() {
+  const center = state.map?.getCenter();
+  const zoom = state.map?.getZoom();
+
+  const mapTypeId =
+    state.map?.getMapTypeId() || "terrain";
+
+  const showDestinations =
+    document.querySelector("#placesToggle").checked;
+
+  const view = {
+    center: center
+      ? {
+          lat: center.lat(),
+          lng: center.lng()
+        }
+      : FINGER_LAKES,
+
+    zoom:
+      zoom ?? FINGER_LAKES.zoom,
+
+    mapTypeId,
+
+    clickableIcons:
+      showDestinations
   };
 
   clearMarkers();
@@ -511,17 +617,21 @@ function switchDestinations(showDestinations) {
 
 function loadGoogleMaps() {
   return new Promise((resolve, reject) => {
-    const key = window.MAP_CONFIG?.GOOGLE_MAPS_API_KEY;
+    const key =
+      window.MAP_CONFIG?.GOOGLE_MAPS_API_KEY;
 
     if (!key || key === "REPLACE_ME") {
       return reject(
-        new Error("Google Maps API key is not configured.")
+        new Error(
+          "Google Maps API key is not configured."
+        )
       );
     }
 
     window.__initMap = resolve;
 
-    const s = document.createElement("script");
+    const s =
+      document.createElement("script");
 
     s.src =
       `https://maps.googleapis.com/maps/api/js` +
@@ -533,7 +643,11 @@ function loadGoogleMaps() {
     s.async = true;
 
     s.onerror = () =>
-      reject(new Error("Google Maps failed to load."));
+      reject(
+        new Error(
+          "Google Maps failed to load."
+        )
+      );
 
     document.head.appendChild(s);
   });
@@ -542,76 +656,156 @@ function loadGoogleMaps() {
 async function loadCategoryIcons() {
   const response = await fetch(
     `category-icons.json?v=${Date.now()}`,
-    { cache: "no-store" }
+    {
+      cache: "no-store"
+    }
   );
 
   if (!response.ok) {
-    throw new Error("Could not load category-icons.json.");
+    throw new Error(
+      "Could not load category-icons.json."
+    );
   }
 
   return response.json();
 }
 
 async function main() {
-  const [data, categoryIcons] = await Promise.all([
-    fetch(
-      `data.json?v=${Date.now()}`,
-      { cache: "no-store" }
-    ).then(r => {
-      if (!r.ok) {
-        throw new Error("Could not load data.json.");
-      }
-      return r.json();
-    }),
+  const [data, categoryIcons] =
+    await Promise.all([
+      fetch(
+        `data.json?v=${Date.now()}`,
+        {
+          cache: "no-store"
+        }
+      ).then(r => {
+        if (!r.ok) {
+          throw new Error(
+            "Could not load data.json."
+          );
+        }
 
-    loadCategoryIcons()
-  ]);
+        return r.json();
+      }),
 
-  state.locations = (data.locations || []).filter(
-    x =>
-      Number.isFinite(Number(x.lat)) &&
-      Number.isFinite(Number(x.lng))
-  );
+      loadCategoryIcons()
+    ]);
 
-  state.categories = data.categories || [];
-  state.categoryIcons = categoryIcons || {};
+  state.locations =
+    (data.locations || []).filter(
+      x =>
+        Number.isFinite(Number(x.lat)) &&
+        Number.isFinite(Number(x.lng))
+    );
+
+  state.categories =
+    data.categories || [];
+
+  state.categoryIcons =
+    categoryIcons || {};
 
   await loadGoogleMaps();
 
-  createMap(MAP_ID_DESTINATIONS_OFF, {
-    center: FINGER_LAKES,
-    zoom: FINGER_LAKES.zoom,
-    mapTypeId: "terrain",
-    clickableIcons: false
-  });
+  /*
+   * Start with Google destinations hidden.
+   * FOLLOW_SYSTEM automatically selects light/dark.
+   */
+  createMap(
+    MAP_ID_DESTINATIONS_OFF,
+    {
+      center: FINGER_LAKES,
+      zoom: FINGER_LAKES.zoom,
+      mapTypeId: "terrain",
+      clickableIcons: false
+    }
+  );
 
   render();
 
+  /*
+   * Channel filters
+   */
   document
-    .querySelectorAll("#flockToggle,#poomToggle")
-    .forEach(x => x.addEventListener("change", render));
+    .querySelectorAll(
+      "#flockToggle,#poomToggle"
+    )
+    .forEach(x =>
+      x.addEventListener(
+        "change",
+        render
+      )
+    );
 
+  /*
+   * Google destinations toggle
+   */
   document
     .querySelector("#placesToggle")
-    .addEventListener("change", e => {
-      switchDestinations(e.target.checked);
-    });
+    .addEventListener(
+      "change",
+      e => {
+        switchDestinations(
+          e.target.checked
+        );
+      }
+    );
 
+  /*
+   * Watch for the visitor changing their system
+   * between Light and Dark while this page is open.
+   */
+  const colorSchemeQuery =
+    window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    );
+
+  colorSchemeQuery.addEventListener(
+    "change",
+    switchSystemColorScheme
+  );
+
+  /*
+   * Finger Lakes button
+   */
   document
     .querySelector("#fingerLakesBtn")
-    .addEventListener("click", () => {
-      state.map.setCenter(FINGER_LAKES);
-      state.map.setZoom(FINGER_LAKES.zoom);
-    });
+    .addEventListener(
+      "click",
+      () => {
+        state.map.setCenter(
+          FINGER_LAKES
+        );
 
+        state.map.setZoom(
+          FINGER_LAKES.zoom
+        );
+      }
+    );
+
+  /*
+   * Show all locations button
+   */
   document
     .querySelector("#allLocationsBtn")
-    .addEventListener("click", fitAll);
+    .addEventListener(
+      "click",
+      fitAll
+    );
 }
 
 main().catch(err => {
-  document.querySelector("#error").hidden = false;
-  document.querySelector("#error").textContent = err.message;
-  document.querySelector("#status").textContent = "Map unavailable";
+  document.querySelector(
+    "#error"
+  ).hidden = false;
+
+  document.querySelector(
+    "#error"
+  ).textContent = err.message;
+
+  document.querySelector(
+    "#status"
+  ).textContent =
+    "Map unavailable";
+
   console.error(err);
 });
