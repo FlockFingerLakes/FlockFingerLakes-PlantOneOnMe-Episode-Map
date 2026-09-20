@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-20T20:23:05.977966+00:00",
+  "updatedAt": "2026-09-20T20:28:27.568693+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -14,6 +14,96 @@
       "recordsInView": 29,
       "mapped": 29,
       "skipped": 0
+    }
+  ],
+  "categories": [
+    {
+      "name": "Community",
+      "airtableColor": "yellowLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Eatery",
+      "airtableColor": "purpleLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Farm",
+      "airtableColor": "greenLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Garden Center",
+      "airtableColor": "greenLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Garden Private",
+      "airtableColor": "greenLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Garden Public",
+      "airtableColor": "greenLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Grocery Store",
+      "airtableColor": "blueLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Health Center",
+      "airtableColor": "redLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Other",
+      "airtableColor": "grayLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "Park",
+      "airtableColor": "greenLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
+    },
+    {
+      "name": "School",
+      "airtableColor": "yellowLight1",
+      "sources": [
+        "flock",
+        "poom"
+      ]
     }
   ],
   "mappedLocations": 58,
