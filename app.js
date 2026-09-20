@@ -466,6 +466,7 @@ function createMap(mapId, view = {}) {
       center: view.center || FINGER_LAKES,
       zoom: view.zoom ?? FINGER_LAKES.zoom,
       mapTypeId: view.mapTypeId || "terrain",
+      colorScheme: "FOLLOW_SYSTEM",
       fullscreenControl: true,
       streetViewControl: false,
       mapTypeControl: true,
