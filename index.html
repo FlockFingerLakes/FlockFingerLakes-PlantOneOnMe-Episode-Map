@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Flock Finger Lakes + Plant One On Me Episode Map</title>
+  <meta name="description" content="Explore filming locations from Flock Finger Lakes and Plant One On Me.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="map-shell">
+  <header class="map-header">
+    <div class="heading"><h1>Episode Locations</h1><p id="status">Loading locations…</p></div>
+    <div class="controls">
+      <div class="toggle-group" aria-label="Channels">
+        <label><input id="flockToggle" type="checkbox" checked> Flock Finger Lakes</label>
+        <label><input id="poomToggle" type="checkbox" checked> Plant One On Me</label>
+        <label><input id="placesToggle" type="checkbox"> Google destinations</label>
+      </div>
+      <div class="map-actions"><button id="fingerLakesBtn" type="button">Finger Lakes</button><button id="allLocationsBtn" type="button">Show all locations</button></div>
+    </div>
+  </header>
+  <main id="map" aria-label="Interactive map of episode filming locations"></main>
+  <div id="error" class="error" hidden></div>
+</div>
+<script src="config.js"></script><script type="module" src="app.js"></script>
+</body></html>
