@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-21T14:25:49.342912+00:00",
+  "updatedAt": "2026-09-21T15:23:32.027734+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -11,9 +11,9 @@
     {
       "channel": "poom",
       "label": "Plant One On Me",
-      "recordsInView": 0,
-      "mapped": 0,
-      "skipped": 0
+      "recordsInView": 9,
+      "mapped": 7,
+      "skipped": 2
     }
   ],
   "categories": [
@@ -106,7 +106,7 @@
       ]
     }
   ],
-  "mappedLocations": 79,
+  "mappedLocations": 86,
   "locations": [
     {
       "recordId": "recjgAmRBw69T7gBr",
@@ -1371,6 +1371,118 @@
       "addressState": "NY",
       "addressZip": "14532",
       "addressCountry": "United States or America"
+    },
+    {
+      "recordId": "recuwY5zXrINXlpJf",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 098 - Building Gardens by the Bay in Singapore — 1 of 5",
+      "youtubeLink": "https://www.youtube.com/watch?v=HuWu22MFBMo",
+      "mapCategory": "Garden Public",
+      "lat": 1.283741517485823,
+      "lng": 103.8659264675773,
+      "address": "18 Marina Gardens Dr, Singapore, 018953, Singapore",
+      "addressStreet": "18 Marina Gardens Dr",
+      "addressTown": "",
+      "addressState": "Singapore",
+      "addressZip": "018953",
+      "addressCountry": "Singapore"
+    },
+    {
+      "recordId": "recY4dpEZzUXhTMLS",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 099 - Gardens by the Bay Cloud Forest Dome Tour — 2 of 5",
+      "youtubeLink": "https://www.youtube.com/watch?v=IkzJlZpG66Y",
+      "mapCategory": "Garden Public",
+      "lat": 1.283741517485823,
+      "lng": 103.8659264675773,
+      "address": "18 Marina Gardens Dr, Singapore, 018953, Singapore",
+      "addressStreet": "18 Marina Gardens Dr",
+      "addressTown": "",
+      "addressState": "Singapore",
+      "addressZip": "018953",
+      "addressCountry": "Singapore"
+    },
+    {
+      "recordId": "rec6VAVHIFiBNvKbP",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 100 - Gardens by the Bay Cloud Forest Dome Tour — 3 of 5",
+      "youtubeLink": "https://www.youtube.com/watch?v=XZQ0NHdK63E&t=9s",
+      "mapCategory": "Garden Public",
+      "lat": 1.283741517485823,
+      "lng": 103.8659264675773,
+      "address": "18 Marina Gardens Dr, Singapore, 018953, Singapore",
+      "addressStreet": "18 Marina Gardens Dr",
+      "addressTown": "",
+      "addressState": "Singapore",
+      "addressZip": "018953",
+      "addressCountry": "Singapore"
+    },
+    {
+      "recordId": "reco2tTGMsY6TvUw9",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 101 - Gardens by the Bay Cloud Forest Dome Tour — 4 of 5",
+      "youtubeLink": "https://www.youtube.com/watch?v=ZKiCxnReZPg",
+      "mapCategory": "Garden Public",
+      "lat": 1.283741517485823,
+      "lng": 103.8659264675773,
+      "address": "18 Marina Gardens Dr, Singapore, 018953, Singapore",
+      "addressStreet": "18 Marina Gardens Dr",
+      "addressTown": "",
+      "addressState": "Singapore",
+      "addressZip": "018953",
+      "addressCountry": "Singapore"
+    },
+    {
+      "recordId": "rec8YgxNgep1seU2j",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 102 - Gardens by the Bay Cloud Forest Dome Tour — 5 of 5",
+      "youtubeLink": "https://www.youtube.com/watch?v=bPNR9upHtUM",
+      "mapCategory": "Garden Public",
+      "lat": 1.283741517485823,
+      "lng": 103.8659264675773,
+      "address": "18 Marina Gardens Dr, Singapore, 018953, Singapore",
+      "addressStreet": "18 Marina Gardens Dr",
+      "addressTown": "",
+      "addressState": "Singapore",
+      "addressZip": "018953",
+      "addressCountry": "Singapore"
+    },
+    {
+      "recordId": "recj7rMOwexEiN53y",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 104 - Greenhouse Tour in Singapore",
+      "youtubeLink": "https://www.youtube.com/watch?v=xqLmLCeL15w",
+      "mapCategory": "Garden Center",
+      "lat": 1.398061450880947,
+      "lng": 103.7317118395456,
+      "address": "102 Sungei Tengah Road, Inside Bescon Garden and Landscape, Singapore, 698995, Singapore",
+      "addressStreet": "102 Sungei Tengah Road, Inside Bescon Garden and Landscape",
+      "addressTown": "",
+      "addressState": "Singapore",
+      "addressZip": "698995",
+      "addressCountry": "Singapore"
+    },
+    {
+      "recordId": "recOZDZ3EWhwaN4OX",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Vlog 002 - New Plant Shop in Greenpoint",
+      "youtubeLink": "https://www.youtube.com/watch?v=vIt5tbhjuNk",
+      "mapCategory": "Garden Private",
+      "lat": 40.736352595040785,
+      "lng": -73.95204633826617,
+      "address": "195 Dupont St, Brooklyn, NY, 11222, United States of America",
+      "addressStreet": "195 Dupont St",
+      "addressTown": "Brooklyn",
+      "addressState": "NY",
+      "addressZip": "11222",
+      "addressCountry": "United States of America"
     }
   ]
 }
