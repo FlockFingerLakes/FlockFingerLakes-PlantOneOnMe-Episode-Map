@@ -1,12 +1,12 @@
 {
-  "updatedAt": "2026-09-21T08:27:12.764663+00:00",
+  "updatedAt": "2026-09-21T09:25:57.043045+00:00",
   "sources": [
     {
       "channel": "flock",
       "label": "Flock Finger Lakes",
-      "recordsInView": 5,
+      "recordsInView": 29,
       "mapped": 5,
-      "skipped": 0
+      "skipped": 24
     },
     {
       "channel": "poom",
