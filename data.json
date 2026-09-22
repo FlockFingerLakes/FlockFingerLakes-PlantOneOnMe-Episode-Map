@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T15:24:39.233088+00:00",
+  "updatedAt": "2026-09-22T16:26:01.189189+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -11,9 +11,9 @@
     {
       "channel": "poom",
       "label": "Plant One On Me",
-      "recordsInView": 9,
+      "recordsInView": 56,
       "mapped": 7,
-      "skipped": 2
+      "skipped": 49
     }
   ],
   "categories": [
