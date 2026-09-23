@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T21:24:29.557799+00:00",
+  "updatedAt": "2026-09-23T22:23:37.676806+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -11,9 +11,9 @@
     {
       "channel": "poom",
       "label": "Plant One On Me",
-      "recordsInView": 203,
-      "mapped": 48,
-      "skipped": 155
+      "recordsInView": 204,
+      "mapped": 58,
+      "skipped": 146
     }
   ],
   "categories": [
@@ -106,7 +106,7 @@
       ]
     }
   ],
-  "mappedLocations": 127,
+  "mappedLocations": 137,
   "locations": [
     {
       "recordId": "recjgAmRBw69T7gBr",
@@ -1469,6 +1469,150 @@
       "addressCountry": "Singapore"
     },
     {
+      "recordId": "recDwbbCJkYE4PKcA",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 367 -  Hillwood Estate Orchid Tour",
+      "youtubeLink": "https://youtu.be/rd3vp30No14",
+      "mapCategory": "Garden Public",
+      "lat": 38.94424617900441,
+      "lng": -77.05235998658594,
+      "address": "4155 Linnean Ave NW, Washington, DC, 20008, United States",
+      "addressStreet": "4155 Linnean Ave NW",
+      "addressTown": "Washington",
+      "addressState": "DC",
+      "addressZip": "20008",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recixafBXyKjbBlc4",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 368 -  Homestead Gardens Talk + Tour",
+      "youtubeLink": "https://youtu.be/zrVuhHSQ72Q",
+      "mapCategory": "Garden Center",
+      "lat": 38.923387288908415,
+      "lng": -76.62568615803413,
+      "address": "743 W Central Ave, Davidsonville, MD, 21035, United States",
+      "addressStreet": "743 W Central Ave",
+      "addressTown": "Davidsonville",
+      "addressState": "MD",
+      "addressZip": "21035",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recIyNgei38xGNzmu",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 369 -  Wave Hill Palm House Tour",
+      "youtubeLink": "https://youtu.be/pqLrXDKZblY",
+      "mapCategory": "Garden Public",
+      "lat": 40.898772165433506,
+      "lng": -73.91175590110761,
+      "address": "4900 Independence Ave, Bronx, NY, 10471, United States",
+      "addressStreet": "4900 Independence Ave",
+      "addressTown": "Bronx",
+      "addressState": "NY",
+      "addressZip": "10471",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "rec9wyMB4DaCG5BOQ",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 370 -  Wave Hill Alpine Plant Tour",
+      "youtubeLink": "https://youtu.be/MnLdF27_ZZA",
+      "mapCategory": "Garden Public",
+      "lat": 40.89919464418886,
+      "lng": -73.91175732500376,
+      "address": "4900 Independence Ave, Bronx, NY, 10471, United States",
+      "addressStreet": "4900 Independence Ave",
+      "addressTown": "Bronx",
+      "addressState": "NY",
+      "addressZip": "10471",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recnyg4Uak28QsF7D",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 371 -  Biltmore Estate Conservatory Tour",
+      "youtubeLink": "https://youtu.be/DqH8LPidIto",
+      "mapCategory": "Garden Public",
+      "lat": 35.537786500003506,
+      "lng": -82.55247472160718,
+      "address": "1 Lodge St, Asheville, NC, 28803, United States",
+      "addressStreet": "1 Lodge St",
+      "addressTown": "Asheville",
+      "addressState": "NC",
+      "addressZip": "28803",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recrmU5Z7nwvaM4yY",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 372 -  Biltmore Estate Orchid Tour",
+      "youtubeLink": "https://youtu.be/CZfLA_dAMDY",
+      "mapCategory": "Garden Public",
+      "lat": 35.53774544248353,
+      "lng": -82.55233752853,
+      "address": "1 Lodge St, Asheville, NC, 28803, United States",
+      "addressStreet": "1 Lodge St",
+      "addressTown": "Asheville",
+      "addressState": "NC",
+      "addressZip": "28803",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "reczeIAeMPAw2sjwv",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 375 - Go Inside B. Willow's Charming Baltimore Plant Shop",
+      "youtubeLink": "https://youtu.be/9dp59x90bNg",
+      "mapCategory": "Garden Center",
+      "lat": 39.32064327345192,
+      "lng": -76.62057485475336,
+      "address": "220 W 27th St, Baltimore, MD, 21211, United States",
+      "addressStreet": "220 W 27th St",
+      "addressTown": "Baltimore",
+      "addressState": "MD",
+      "addressZip": "21211",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recnvgMRoqRc2uz5w",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 376 -  A Plant Collector's Nursery Tour: 27,000 Taxa!",
+      "youtubeLink": "https://youtu.be/ozg98RKUQwI",
+      "mapCategory": "Garden Center",
+      "lat": 35.62688673498114,
+      "lng": -78.63922240827985,
+      "address": "9241 Sauls Rd, Raleigh, NC, 27603, United States",
+      "addressStreet": "9241 Sauls Rd",
+      "addressTown": "Raleigh",
+      "addressState": "NC",
+      "addressZip": "27603",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recEb2muc77G27TvE",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 377 -  PROPAGATE with a POWER DRILL?",
+      "youtubeLink": "https://youtu.be/dod-afxnnTs",
+      "mapCategory": "Garden Center",
+      "lat": 35.62688673498114,
+      "lng": -78.63922240827985,
+      "address": "9241 Sauls Rd, Raleigh, NC, 27603, United States",
+      "addressStreet": "9241 Sauls Rd",
+      "addressTown": "Raleigh",
+      "addressState": "NC",
+      "addressZip": "27603",
+      "addressCountry": "United States"
+    },
+    {
       "recordId": "recD1C7ZR3ywfOZL2",
       "channel": "poom",
       "channelLabel": "Plant One On Me",
@@ -1477,12 +1621,12 @@
       "mapCategory": "Garden Public",
       "lat": 38.84329880944304,
       "lng": -76.94021121861392,
-      "address": "",
-      "addressStreet": "",
-      "addressTown": "",
-      "addressState": "",
-      "addressZip": "",
-      "addressCountry": ""
+      "address": "4210 Silver Hill Rd, Camp Springs, MD, 20746, United States",
+      "addressStreet": "4210 Silver Hill Rd",
+      "addressTown": "Camp Springs",
+      "addressState": "MD",
+      "addressZip": "20746",
+      "addressCountry": "United States"
     },
     {
       "recordId": "rec1VuKxuDCngFhyX",
@@ -2139,6 +2283,22 @@
       "addressState": "NY",
       "addressZip": "11222",
       "addressCountry": "United States of America"
+    },
+    {
+      "recordId": "rec4RDgIt5twdzd0I",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Vlog 060 -  Terrain at BBG Event",
+      "youtubeLink": "https://youtu.be/prH8dxKF24U",
+      "mapCategory": "Garden Center",
+      "lat": 40.66946042027419,
+      "lng": -73.96235033621707,
+      "address": "990 Washington Ave, Brooklyn, NY, 11225, United States",
+      "addressStreet": "990 Washington Ave",
+      "addressTown": "Brooklyn",
+      "addressState": "NY",
+      "addressZip": "11225",
+      "addressCountry": "United States"
     }
   ]
 }
