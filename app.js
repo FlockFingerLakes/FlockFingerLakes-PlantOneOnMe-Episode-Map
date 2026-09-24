@@ -465,7 +465,7 @@ function createMap(mapId, view = {}) {
     {
       center: view.center || FINGER_LAKES,
       zoom: view.zoom ?? FINGER_LAKES.zoom,
-      mapTypeId: view.mapTypeId || "terrain",
+      mapTypeId: view.mapTypeId || "roadmap",
       fullscreenControl: true,
       streetViewControl: false,
       mapTypeControl: true,
@@ -481,7 +481,7 @@ function createMap(mapId, view = {}) {
 function switchDestinations(showDestinations) {
   const center = state.map?.getCenter();
   const zoom = state.map?.getZoom();
-  const mapTypeId = state.map?.getMapTypeId() || "terrain";
+  const mapTypeId = state.map?.getMapTypeId() || "roadmap";
 
   const view = {
     center: center
@@ -580,7 +580,7 @@ async function main() {
   createMap(MAP_ID_DESTINATIONS_OFF, {
     center: FINGER_LAKES,
     zoom: FINGER_LAKES.zoom,
-    mapTypeId: "terrain",
+    mapTypeId: "roadmap",
     clickableIcons: false
   });
 
