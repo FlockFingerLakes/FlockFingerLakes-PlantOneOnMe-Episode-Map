@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T12:30:50.349123+00:00",
+  "updatedAt": "2026-09-24T13:27:04.971548+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -12,8 +12,8 @@
       "channel": "poom",
       "label": "Plant One On Me",
       "recordsInView": 192,
-      "mapped": 132,
-      "skipped": 60
+      "mapped": 133,
+      "skipped": 59
     }
   ],
   "categories": [
@@ -106,7 +106,7 @@
       ]
     }
   ],
-  "mappedLocations": 211,
+  "mappedLocations": 212,
   "locations": [
     {
       "recordId": "recjgAmRBw69T7gBr",
@@ -1467,6 +1467,22 @@
       "addressState": "Singapore",
       "addressZip": "698995",
       "addressCountry": "Singapore"
+    },
+    {
+      "recordId": "rec1fD2JVyIY6NOeP",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 223. Brooklyn Plant Shop Tour: Part 6/6 (Tula Plants & Design)",
+      "youtubeLink": "https://youtu.be/MO8xVYtVVbQ",
+      "mapCategory": "Garden Center",
+      "lat": 40.72642962060926,
+      "lng": -73.95511408415472,
+      "address": "59 Meserole Ave, Brooklyn, NY, 11222, United States",
+      "addressStreet": "59 Meserole Ave",
+      "addressTown": "Brooklyn",
+      "addressState": "NY",
+      "addressZip": "11222",
+      "addressCountry": "United States"
     },
     {
       "recordId": "recaHiCi3fl4kbFqG",
