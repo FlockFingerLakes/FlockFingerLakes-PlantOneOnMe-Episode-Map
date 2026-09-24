@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T00:14:07.778426+00:00",
+  "updatedAt": "2026-09-24T00:31:39.552065+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -11,9 +11,9 @@
     {
       "channel": "poom",
       "label": "Plant One On Me",
-      "recordsInView": 201,
-      "mapped": 70,
-      "skipped": 131
+      "recordsInView": 200,
+      "mapped": 77,
+      "skipped": 123
     }
   ],
   "categories": [
@@ -106,7 +106,7 @@
       ]
     }
   ],
-  "mappedLocations": 149,
+  "mappedLocations": 156,
   "locations": [
     {
       "recordId": "recjgAmRBw69T7gBr",
@@ -1469,6 +1469,102 @@
       "addressCountry": "Singapore"
     },
     {
+      "recordId": "recRS8t5IRoF2h0Jz",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 338 - Propagation of Desert Plants at Tohono Chul Tour",
+      "youtubeLink": "https://youtu.be/UaZJ2I3E1B0",
+      "mapCategory": "Garden Public",
+      "lat": 32.33986791705054,
+      "lng": -110.9814484443334,
+      "address": "7366 N Paseo Del Norte, Tucson, AZ, 85704, United States",
+      "addressStreet": "7366 N Paseo Del Norte",
+      "addressTown": "Tucson",
+      "addressState": "AZ",
+      "addressZip": "85704",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recBgSZZ9rstWjV0W",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 339 - Tohono Chul Symphonic Garden Tour",
+      "youtubeLink": "https://youtu.be/MxJbIdY6BBo",
+      "mapCategory": "Garden Public",
+      "lat": 32.33986791705054,
+      "lng": -110.9814484443334,
+      "address": "7366 N Paseo Del Norte, Tucson, AZ, 85704, United States",
+      "addressStreet": "7366 N Paseo Del Norte",
+      "addressTown": "Tucson",
+      "addressState": "AZ",
+      "addressZip": "85704",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recS5S9vipx2QXSLQ",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 341 -  The Cactus Store NYC Tour",
+      "youtubeLink": "https://youtu.be/MNknZbBI9xE",
+      "mapCategory": "Garden Center",
+      "lat": 40.71479489597537,
+      "lng": -73.99036662547996,
+      "address": "5 Essex Street, New York, New York, 10002, United States",
+      "addressStreet": "5 Essex Street",
+      "addressTown": "New York",
+      "addressState": "New York",
+      "addressZip": "10002",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "recaploTOcaRB625V",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 342 -  Restoring Native Orchids to Florida",
+      "youtubeLink": "https://youtu.be/jwNblH2-N3o",
+      "mapCategory": "Garden Public",
+      "lat": 25.676843786616413,
+      "lng": -80.2722774934781,
+      "address": "Old Cutler Rd",
+      "addressStreet": "Old Cutler Rd",
+      "addressTown": "",
+      "addressState": "",
+      "addressZip": "",
+      "addressCountry": ""
+    },
+    {
+      "recordId": "rec9xjQXH050LsnPb",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 343 -  What's New at Fairchild Tropical Botanic Garden Conservatory?",
+      "youtubeLink": "https://youtu.be/i7neNihUNCw",
+      "mapCategory": "Garden Public",
+      "lat": 25.676843786616413,
+      "lng": -80.2722774934781,
+      "address": "Old Cutler Rd, Coral Gables, FL, 33156, United States",
+      "addressStreet": "Old Cutler Rd",
+      "addressTown": "Coral Gables",
+      "addressState": "FL",
+      "addressZip": "33156",
+      "addressCountry": "United States"
+    },
+    {
+      "recordId": "reczYWkxitlLIItzN",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 347 -  Longwood Garden's Mum Show",
+      "youtubeLink": "https://youtu.be/kTj81wJyQaE",
+      "mapCategory": "Garden Public",
+      "lat": 39.872908931219705,
+      "lng": -75.67857200126018,
+      "address": "1001 Longwood Rd, Kennett Square, PA, 19348, United States of America",
+      "addressStreet": "1001 Longwood Rd",
+      "addressTown": "Kennett Square",
+      "addressState": "PA",
+      "addressZip": "19348",
+      "addressCountry": "United States of America"
+    },
+    {
       "recordId": "recBsYs5LtCTAnCwZ",
       "channel": "poom",
       "channelLabel": "Plant One On Me",
@@ -2459,6 +2555,22 @@
       "addressState": "NY",
       "addressZip": "11222",
       "addressCountry": "United States of America"
+    },
+    {
+      "recordId": "recE1T0AThAH6wEb7",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Vlog 058 -  LES Cactus & Succulent Show Recap",
+      "youtubeLink": "https://youtu.be/tUn5y4lYS_w",
+      "mapCategory": "Community",
+      "lat": 40.71479489597537,
+      "lng": -73.99036662547996,
+      "address": "5 Essex Street, New York, New York, 10002, United States",
+      "addressStreet": "5 Essex Street",
+      "addressTown": "New York",
+      "addressState": "New York",
+      "addressZip": "10002",
+      "addressCountry": "United States"
     },
     {
       "recordId": "recNeOrWUs2GKPpZy",
