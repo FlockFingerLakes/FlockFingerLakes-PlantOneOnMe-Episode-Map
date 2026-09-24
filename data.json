@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T14:26:42.261450+00:00",
+  "updatedAt": "2026-09-24T15:26:59.827201+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -12,8 +12,8 @@
       "channel": "poom",
       "label": "Plant One On Me",
       "recordsInView": 191,
-      "mapped": 166,
-      "skipped": 25
+      "mapped": 167,
+      "skipped": 24
     }
   ],
   "categories": [
@@ -106,7 +106,7 @@
       ]
     }
   ],
-  "mappedLocations": 245,
+  "mappedLocations": 246,
   "locations": [
     {
       "recordId": "recjgAmRBw69T7gBr",
@@ -1493,12 +1493,12 @@
       "mapCategory": "Garden Public",
       "lat": 12.76649985588637,
       "lng": 100.93857573867206,
-      "address": "",
-      "addressStreet": "",
-      "addressTown": "",
-      "addressState": "",
-      "addressZip": "",
-      "addressCountry": ""
+      "address": "Na Chom Thian, Sattahip District, Chon Buri, 20250, Thailand",
+      "addressStreet": "Na Chom Thian",
+      "addressTown": "Sattahip District",
+      "addressState": "Chon Buri",
+      "addressZip": "20250",
+      "addressCountry": "Thailand"
     },
     {
       "recordId": "recpdvYRG1JeK7PUp",
@@ -1509,12 +1509,12 @@
       "mapCategory": "Garden Public",
       "lat": 12.76649985588637,
       "lng": 100.93857573867206,
-      "address": "",
-      "addressStreet": "",
-      "addressTown": "",
-      "addressState": "",
-      "addressZip": "",
-      "addressCountry": ""
+      "address": "Na Chom Thian, Sattahip District, Chon Buri, 20250, Thailand",
+      "addressStreet": "Na Chom Thian",
+      "addressTown": "Sattahip District",
+      "addressState": "Chon Buri",
+      "addressZip": "20250",
+      "addressCountry": "Thailand"
     },
     {
       "recordId": "recClZ1HGQcC53HNJ",
@@ -1525,12 +1525,28 @@
       "mapCategory": "Garden Public",
       "lat": 12.761147378987813,
       "lng": 100.93448834375637,
-      "address": "",
-      "addressStreet": "",
-      "addressTown": "",
-      "addressState": "",
-      "addressZip": "",
-      "addressCountry": ""
+      "address": "Na Chom Thian, Sattahip District, Chon Buri, 20250, Thailand",
+      "addressStreet": "Na Chom Thian",
+      "addressTown": "Sattahip District",
+      "addressState": "Chon Buri",
+      "addressZip": "20250",
+      "addressCountry": "Thailand"
+    },
+    {
+      "recordId": "rec37pusIYBDoAkCV",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 147 -  Nong Nooch Botanic Garden: Hoya Tour",
+      "youtubeLink": "https://youtu.be/CquuLTntXos",
+      "mapCategory": "Garden Public",
+      "lat": 12.760640716898743,
+      "lng": 100.93611704820655,
+      "address": "Na Chom Thian, Sattahip District, Chon Buri, 20250, Thailand",
+      "addressStreet": "Na Chom Thian",
+      "addressTown": "Sattahip District",
+      "addressState": "Chon Buri",
+      "addressZip": "20250",
+      "addressCountry": "Thailand"
     },
     {
       "recordId": "recay0vavAE7SM6rY",
