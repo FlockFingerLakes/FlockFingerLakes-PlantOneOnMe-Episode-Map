@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Episode Locations — Print</title>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:FILL,wght,GRAD,opsz@0..1,100..700,-50..200,20..48"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="print.css">
+</head>
+
+<body>
+
+  <div class="print-toolbar">
+    <button id="backBtn" type="button">
+      ← Back to map
+    </button>
+
+    <button id="printPdfBtn" type="button">
+      Print / Save PDF
+    </button>
+  </div>
+
+  <main class="print-document">
+
+    <header class="print-header">
+      <div>
+        <h1>Episode Locations</h1>
+
+        <p id="printSubtitle">
+          Flock Finger Lakes + Plant One On Me
+        </p>
+      </div>
+
+      <div id="printSummary" class="print-summary">
+        Loading…
+      </div>
+    </header>
+
+    <section class="map-page">
+
+      <div class="section-heading">
+        <h2>Location Map</h2>
+
+        <p>
+          Filming locations shown geographically from
+          latitude and longitude.
+        </p>
+      </div>
+
+      <div id="printMap" class="print-map"></div>
+
+      <div id="legend" class="legend"></div>
+
+    </section>
+
+    <section class="directory-section">
+
+      <div class="section-heading">
+        <h2>Location Directory</h2>
+      </div>
+
+      <div id="locationDirectory"></div>
+
+    </section>
+
+  </main>
+
+  <script src="print.js"></script>
+
+</body>
+</html>
