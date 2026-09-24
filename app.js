@@ -1,8 +1,8 @@
 const FINGER_LAKES = { lat: 42.60, lng: -76.95, zoom: 8.7 };
 
 // Google Maps IDs
-// OFF = custom Google Cloud style with destinations hidden.
-// ON  = Google default style with destinations visible.
+// OFF uses the cloud style where Points of Interest are hidden.
+// ON uses Google's default style where Points of Interest are visible.
 const MAP_ID_DESTINATIONS_OFF = "39e3e5d57f6a3b577a866c0a";
 const MAP_ID_DESTINATIONS_ON = "39e3e5d57f6a3b5794f5fdf2";
 
@@ -17,6 +17,7 @@ const state = {
 
 /*
  * Airtable single-select color -> map marker color.
+ * These are approximate web equivalents of Airtable's palette.
  */
 const AIRTABLE_COLORS = {
   blueLight2: "#C6E2FF",
@@ -94,11 +95,9 @@ function categoryColor(categoryName) {
 
   if (!category) {
     const other = categoryConfig("Other");
-
     if (other) {
       return AIRTABLE_COLORS[other.airtableColor] || "#666666";
     }
-
     return "#666666";
   }
 
@@ -108,9 +107,7 @@ function categoryColor(categoryName) {
 function categoryIcon(categoryName) {
   const exact = state.categoryIcons[categoryName];
 
-  if (exact) {
-    return exact;
-  }
+  if (exact) return exact;
 
   const wanted = norm(categoryName);
 
@@ -118,9 +115,7 @@ function categoryIcon(categoryName) {
     key => norm(key) === wanted
   );
 
-  if (matchingKey) {
-    return state.categoryIcons[matchingKey];
-  }
+  if (matchingKey) return state.categoryIcons[matchingKey];
 
   return state.categoryIcons.Other || "radio_button_unchecked";
 }
@@ -144,9 +139,7 @@ function youtubeId(url) {
     }
 
     if (u.hostname.includes("youtube.com")) {
-      if (u.pathname === "/watch") {
-        return u.searchParams.get("v");
-      }
+      if (u.pathname === "/watch") return u.searchParams.get("v");
 
       if (
         u.pathname.startsWith("/shorts/") ||
@@ -167,23 +160,15 @@ function youtubeId(url) {
 function selectedChannels() {
   const s = new Set();
 
-  if (document.querySelector("#flockToggle").checked) {
-    s.add("flock");
-  }
-
-  if (document.querySelector("#poomToggle").checked) {
-    s.add("poom");
-  }
+  if (document.querySelector("#flockToggle").checked) s.add("flock");
+  if (document.querySelector("#poomToggle").checked) s.add("poom");
 
   return s;
 }
 
 function visibleLocations() {
   const s = selectedChannels();
-
-  return state.locations.filter(
-    x => s.has(x.channel)
-  );
+  return state.locations.filter(x => s.has(x.channel));
 }
 
 function groupLocations(items) {
@@ -209,7 +194,6 @@ function groupLocations(items) {
     }
 
     const g = m.get(key);
-
     g.episodes.push(x);
 
     if (!g.address && x.address) {
@@ -229,17 +213,11 @@ function groupLocations(items) {
 
 function groupStyle(g) {
   const cats = [
-    ...new Set(
-      g.episodes.map(
-        e => norm(e.mapCategory)
-      )
-    )
+    ...new Set(g.episodes.map(e => norm(e.mapCategory)))
   ];
 
   if (cats.length === 1) {
-    return styleFor(
-      g.episodes[0].mapCategory
-    );
+    return styleFor(g.episodes[0].mapCategory);
   }
 
   return styleFor("Other");
@@ -249,34 +227,23 @@ function addressHtml(g) {
   const lines = [];
 
   if (g.addressStreet) {
-    lines.push(
-      `<div>${esc(g.addressStreet)}</div>`
-    );
+    lines.push(`<div>${esc(g.addressStreet)}</div>`);
   }
 
-  let city = [
-    g.addressTown,
-    g.addressState
-  ]
+  let city = [g.addressTown, g.addressState]
     .filter(Boolean)
     .join(", ");
 
   if (g.addressZip) {
-    city +=
-      (city ? " " : "") +
-      g.addressZip;
+    city += (city ? " " : "") + g.addressZip;
   }
 
   if (city) {
-    lines.push(
-      `<div>${esc(city)}</div>`
-    );
+    lines.push(`<div>${esc(city)}</div>`);
   }
 
   if (g.addressCountry) {
-    lines.push(
-      `<div>${esc(g.addressCountry)}</div>`
-    );
+    lines.push(`<div>${esc(g.addressCountry)}</div>`);
   }
 
   return lines.join("");
@@ -287,61 +254,45 @@ function episodeHtml(e) {
   const id = youtubeId(e.youtubeLink);
 
   return `
-    <div
-      class="episode-card"
-      style="--episode-color:${st.color}"
-    >
+    <div class="episode-card" style="--episode-color:${st.color}">
       <div class="episode-card-header">
-
         <div>
           <div class="episode-card-title">
             ${esc(e.episodeName || "Video")}
           </div>
-
           <div class="channel-label">
             ${esc(e.channelLabel)}
           </div>
         </div>
-
         <div class="episode-category">
           ${esc(st.label)}
         </div>
-
       </div>
 
       ${
         id
-          ? `
-            <div class="video-wrap">
+          ? `<div class="video-wrap">
               <iframe
                 src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(id)}?rel=0"
                 title="${esc(e.episodeName || "Video")}"
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                allowfullscreen
-              >
+                allowfullscreen>
               </iframe>
-            </div>
-          `
+            </div>`
           : ""
       }
 
       <div class="episode-links">
-
         ${
           e.youtubeLink
-            ? `
-              <a
-                href="${esc(e.youtubeLink)}"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Watch on YouTube ↗
-              </a>
-            `
+            ? `<a href="${esc(e.youtubeLink)}"
+                  target="_blank"
+                  rel="noopener noreferrer">
+                 Watch on YouTube ↗
+               </a>`
             : ""
         }
-
       </div>
     </div>
   `;
@@ -356,88 +307,64 @@ function popupHtml(g) {
 
   return `
     <div class="info-window">
-
       <div class="location-popup-title">
-        ${
-          count === 1
-            ? "Video Location"
-            : `${count} Episodes at This Location`
-        }
+        ${count === 1
+          ? "Video Location"
+          : `${count} Episodes at This Location`}
       </div>
 
       ${
         addressHtml(g)
-          ? `
-            <div class="location-address">
-              ${addressHtml(g)}
-            </div>
-          `
+          ? `<div class="location-address">${addressHtml(g)}</div>`
           : ""
       }
 
-      <a
-        class="location-map-link"
-        href="${maps}"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+      <a class="location-map-link"
+         href="${maps}"
+         target="_blank"
+         rel="noopener noreferrer">
         Navigate to this address in Google Maps ↗
       </a>
 
       <div class="episode-list">
         ${g.episodes.map(episodeHtml).join("")}
       </div>
-
     </div>
   `;
 }
 
 /*
- * Build custom Material Symbol marker.
+ * Build our marker as SVG.
+ * The category symbol itself comes from Google's Material Symbols font.
  */
 function markerElement(st, count) {
-  const wrapper =
-    document.createElement("div");
-
-  wrapper.className =
-    "custom-map-marker";
+  const wrapper = document.createElement("div");
+  wrapper.className = "custom-map-marker";
 
   wrapper.style.position = "relative";
   wrapper.style.width = "42px";
   wrapper.style.height = "50px";
-  wrapper.style.transform =
-    "translateY(-25px)";
+  wrapper.style.transform = "translateY(-25px)";
 
-  const pin =
-    document.createElement("div");
+  const pin = document.createElement("div");
 
   pin.style.width = "42px";
   pin.style.height = "42px";
   pin.style.background = st.color;
-  pin.style.border =
-    "2.5px solid white";
-  pin.style.borderRadius =
-    "50% 50% 50% 0";
-  pin.style.transform =
-    "rotate(-45deg)";
-  pin.style.boxSizing =
-    "border-box";
-  pin.style.boxShadow =
-    "0 1px 4px rgba(0,0,0,.35)";
+  pin.style.border = "2.5px solid white";
+  pin.style.borderRadius = "50% 50% 50% 0";
+  pin.style.transform = "rotate(-45deg)";
+  pin.style.boxSizing = "border-box";
+  pin.style.boxShadow = "0 1px 4px rgba(0,0,0,.35)";
   pin.style.display = "flex";
   pin.style.alignItems = "center";
   pin.style.justifyContent = "center";
 
-  const symbol =
-    document.createElement("span");
-
-  symbol.className =
-    "material-symbols-rounded";
-
+  const symbol = document.createElement("span");
+  symbol.className = "material-symbols-rounded";
   symbol.textContent = st.icon;
 
-  symbol.style.transform =
-    "rotate(45deg)";
+  symbol.style.transform = "rotate(45deg)";
   symbol.style.color = "white";
   symbol.style.fontSize = "23px";
   symbol.style.fontWeight = "500";
@@ -448,32 +375,22 @@ function markerElement(st, count) {
   wrapper.appendChild(pin);
 
   if (count > 1) {
-    const badge =
-      document.createElement("div");
+    const badge = document.createElement("div");
 
-    badge.textContent =
-      String(count);
-
-    badge.style.position =
-      "absolute";
+    badge.textContent = String(count);
+    badge.style.position = "absolute";
     badge.style.right = "-7px";
     badge.style.top = "-7px";
     badge.style.minWidth = "20px";
     badge.style.height = "20px";
     badge.style.padding = "0 4px";
-    badge.style.boxSizing =
-      "border-box";
-    badge.style.borderRadius =
-      "10px";
-    badge.style.background =
-      "#202124";
+    badge.style.boxSizing = "border-box";
+    badge.style.borderRadius = "10px";
+    badge.style.background = "#202124";
     badge.style.color = "white";
-    badge.style.border =
-      "2px solid white";
-    badge.style.font =
-      "700 10px/16px Arial, sans-serif";
-    badge.style.textAlign =
-      "center";
+    badge.style.border = "2px solid white";
+    badge.style.font = "700 10px/16px Arial, sans-serif";
+    badge.style.textAlign = "center";
 
     wrapper.appendChild(badge);
   }
@@ -492,76 +409,47 @@ function clearMarkers() {
 function render() {
   clearMarkers();
 
-  if (state.info) {
-    state.info.close();
-  }
+  if (state.info) state.info.close();
 
-  const groups =
-    groupLocations(
-      visibleLocations()
-    );
+  const groups = groupLocations(visibleLocations());
 
   for (const g of groups) {
-    const st =
-      groupStyle(g);
+    const st = groupStyle(g);
 
-    const marker =
-      new google.maps.marker.AdvancedMarkerElement({
+    const marker = new google.maps.marker.AdvancedMarkerElement({
+      map: state.map,
+      position: { lat: g.lat, lng: g.lng },
+      title:
+        g.episodes.length === 1
+          ? g.episodes[0].episodeName
+          : `${g.episodes.length} episodes`,
+      content: markerElement(st, g.episodes.length)
+    });
+
+    marker.addListener("click", () => {
+      state.info.setContent(popupHtml(g));
+
+      state.info.open({
         map: state.map,
-
-        position: {
-          lat: g.lat,
-          lng: g.lng
-        },
-
-        title:
-          g.episodes.length === 1
-            ? g.episodes[0].episodeName
-            : `${g.episodes.length} episodes`,
-
-        content:
-          markerElement(
-            st,
-            g.episodes.length
-          )
+        anchor: marker
       });
-
-    marker.addListener(
-      "click",
-      () => {
-        state.info.setContent(
-          popupHtml(g)
-        );
-
-        state.info.open({
-          map: state.map,
-          anchor: marker
-        });
-      }
-    );
+    });
 
     state.markers.push(marker);
   }
 
-  document.querySelector(
-    "#status"
-  ).textContent =
+  document.querySelector("#status").textContent =
     `${state.markers.length} filming locations • ` +
     `${visibleLocations().length} episodes`;
 }
 
 function fitAll() {
-  if (!state.markers.length) {
-    return;
-  }
+  if (!state.markers.length) return;
 
-  const b =
-    new google.maps.LatLngBounds();
+  const b = new google.maps.LatLngBounds();
 
   for (const m of state.markers) {
-    if (m.position) {
-      b.extend(m.position);
-    }
+    if (m.position) b.extend(m.position);
   }
 
   state.map.fitBounds(b, 70);
@@ -571,79 +459,37 @@ function fitAll() {
   }
 }
 
-/*
- * Create Google Roadmap.
- */
 function createMap(mapId, view = {}) {
-  state.map =
-    new google.maps.Map(
-      document.querySelector("#map"),
-      {
-        center:
-          view.center ||
-          FINGER_LAKES,
+  state.map = new google.maps.Map(
+    document.querySelector("#map"),
+    {
+      center: view.center || FINGER_LAKES,
+      zoom: view.zoom ?? FINGER_LAKES.zoom,
+      mapTypeId: view.mapTypeId || "roadmap",
+      fullscreenControl: true,
+      streetViewControl: false,
+      mapTypeControl: true,
+      gestureHandling: "greedy",
+      clickableIcons: view.clickableIcons ?? false,
+      mapId
+    }
+  );
 
-        zoom:
-          view.zoom ??
-          FINGER_LAKES.zoom,
-
-        mapTypeId:
-          view.mapTypeId ||
-          "roadmap",
-
-        fullscreenControl: true,
-        streetViewControl: false,
-        mapTypeControl: true,
-
-        gestureHandling:
-          "greedy",
-
-        clickableIcons:
-          view.clickableIcons ??
-          false,
-
-        mapId
-      }
-    );
-
-  state.info =
-    new google.maps.InfoWindow();
+  state.info = new google.maps.InfoWindow();
 }
 
-/*
- * Switch between destinations hidden / visible
- * Map IDs.
- */
-function switchDestinations(
-  showDestinations
-) {
-  const center =
-    state.map?.getCenter();
-
-  const zoom =
-    state.map?.getZoom();
-
-  const mapTypeId =
-    state.map?.getMapTypeId() ||
-    "roadmap";
+function switchDestinations(showDestinations) {
+  const center = state.map?.getCenter();
+  const zoom = state.map?.getZoom();
+  const mapTypeId = state.map?.getMapTypeId() || "roadmap";
 
   const view = {
-    center:
-      center
-        ? {
-            lat: center.lat(),
-            lng: center.lng()
-          }
-        : FINGER_LAKES,
-
-    zoom:
-      zoom ??
-      FINGER_LAKES.zoom,
-
+    center: center
+      ? { lat: center.lat(), lng: center.lng() }
+      : FINGER_LAKES,
+    zoom: zoom ?? FINGER_LAKES.zoom,
     mapTypeId,
-
-    clickableIcons:
-      showDestinations
+    clickableIcons: showDestinations
   };
 
   clearMarkers();
@@ -663,127 +509,108 @@ function switchDestinations(
 }
 
 function loadGoogleMaps() {
-  return new Promise(
-    (resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    const key = window.MAP_CONFIG?.GOOGLE_MAPS_API_KEY;
 
-      const key =
-        window.MAP_CONFIG
-          ?.GOOGLE_MAPS_API_KEY;
-
-      if (
-        !key ||
-        key === "REPLACE_ME"
-      ) {
-        return reject(
-          new Error(
-            "Google Maps API key is not configured."
-          )
-        );
-      }
-
-      window.__initMap =
-        resolve;
-
-      const s =
-        document.createElement(
-          "script"
-        );
-
-      s.src =
-        `https://maps.googleapis.com/maps/api/js` +
-        `?key=${encodeURIComponent(key)}` +
-        `&callback=__initMap` +
-        `&libraries=marker` +
-        `&v=weekly`;
-
-      s.async = true;
-
-      s.onerror = () =>
-        reject(
-          new Error(
-            "Google Maps failed to load."
-          )
-        );
-
-      document.head.appendChild(s);
+    if (!key || key === "REPLACE_ME") {
+      return reject(
+        new Error("Google Maps API key is not configured.")
+      );
     }
-  );
+
+    window.__initMap = resolve;
+
+    const s = document.createElement("script");
+
+    s.src =
+      `https://maps.googleapis.com/maps/api/js` +
+      `?key=${encodeURIComponent(key)}` +
+      `&callback=__initMap` +
+      `&libraries=marker` +
+      `&v=weekly`;
+
+    s.async = true;
+
+    s.onerror = () =>
+      reject(new Error("Google Maps failed to load."));
+
+    document.head.appendChild(s);
+  });
 }
 
 async function loadCategoryIcons() {
-  const response =
-    await fetch(
-      `category-icons.json?v=${Date.now()}`,
-      {
-        cache: "no-store"
-      }
-    );
+  const response = await fetch(
+    `category-icons.json?v=${Date.now()}`,
+    { cache: "no-store" }
+  );
 
   if (!response.ok) {
-    throw new Error(
-      "Could not load category-icons.json."
-    );
+    throw new Error("Could not load category-icons.json.");
   }
 
   return response.json();
 }
 
 async function main() {
-  const [data, categoryIcons] =
-    await Promise.all([
-      fetch(
-        `data.json?v=${Date.now()}`,
-        {
-          cache: "no-store"
-        }
-      ).then(r => {
+  const [data, categoryIcons] = await Promise.all([
+    fetch(
+      `data.json?v=${Date.now()}`,
+      { cache: "no-store" }
+    ).then(r => {
+      if (!r.ok) {
+        throw new Error("Could not load data.json.");
+      }
+      return r.json();
+    }),
 
-        if (!r.ok) {
-          throw new Error(
-            "Could not load data.json."
-          );
-        }
+    loadCategoryIcons()
+  ]);
 
-        return r.json();
-      }),
+  state.locations = (data.locations || []).filter(
+    x =>
+      Number.isFinite(Number(x.lat)) &&
+      Number.isFinite(Number(x.lng))
+  );
 
-      loadCategoryIcons()
-    ]);
-
-  state.locations =
-    (data.locations || [])
-      .filter(
-        x =>
-          Number.isFinite(
-            Number(x.lat)
-          ) &&
-          Number.isFinite(
-            Number(x.lng)
-          )
-      );
-
-  state.categories =
-    data.categories || [];
-
-  state.categoryIcons =
-    categoryIcons || {};
+  state.categories = data.categories || [];
+  state.categoryIcons = categoryIcons || {};
 
   await loadGoogleMaps();
 
-  /*
-   * Start with destinations hidden.
-   */
-  createMap(
-    MAP_ID_DESTINATIONS_OFF,
-    {
-      center:
-        FINGER_LAKES,
+  createMap(MAP_ID_DESTINATIONS_OFF, {
+    center: FINGER_LAKES,
+    zoom: FINGER_LAKES.zoom,
+    mapTypeId: "roadmap",
+    clickableIcons: false
+  });
 
-      zoom:
-        FINGER_LAKES.zoom,
+  render();
 
-      mapTypeId:
-        "roadmap",
+  document
+    .querySelectorAll("#flockToggle,#poomToggle")
+    .forEach(x => x.addEventListener("change", render));
 
-      clickableIcons:
-        false
+  document
+    .querySelector("#placesToggle")
+    .addEventListener("change", e => {
+      switchDestinations(e.target.checked);
+    });
+
+  document
+    .querySelector("#fingerLakesBtn")
+    .addEventListener("click", () => {
+      state.map.setCenter(FINGER_LAKES);
+      state.map.setZoom(FINGER_LAKES.zoom);
+    });
+
+  document
+    .querySelector("#allLocationsBtn")
+    .addEventListener("click", fitAll);
+}
+
+main().catch(err => {
+  document.querySelector("#error").hidden = false;
+  document.querySelector("#error").textContent = err.message;
+  document.querySelector("#status").textContent = "Map unavailable";
+  console.error(err);
+});
