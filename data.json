@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-04T00:46:08.666790+00:00",
+  "updatedAt": "2026-10-04T00:47:47.128482+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -3843,14 +3843,14 @@
       "episodeName": "Ep 445. Carol Watson Greenhouse & Garden Center",
       "youtubeLink": "https://youtu.be/uhcCMXXc1Bw",
       "mapCategory": "Garden Center",
-      "lat": 42.916079,
-      "lng": -76.111133,
-      "address": "2980 Sentinel Heights Rd, Lafayette, NY, 13084, United States of America",
-      "addressStreet": "2980 Sentinel Heights Rd",
-      "addressTown": "Lafayette",
+      "lat": 42.916069108752744,
+      "lng": -76.11113622886143,
+      "address": "2980 Sentinel Heights Road, LaFayette, NY, 13084, United States or America",
+      "addressStreet": "2980 Sentinel Heights Road",
+      "addressTown": "LaFayette",
       "addressState": "NY",
       "addressZip": "13084",
-      "addressCountry": "United States of America"
+      "addressCountry": "United States or America"
     },
     {
       "recordId": "recOZDZ3EWhwaN4OX",
