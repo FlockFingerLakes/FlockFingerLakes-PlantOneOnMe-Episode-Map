@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T19:16:18.084467+00:00",
+  "updatedAt": "2026-10-26T23:08:46.005672+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -11,8 +11,8 @@
     {
       "channel": "poom",
       "label": "Plant One On Me",
-      "recordsInView": 191,
-      "mapped": 167,
+      "recordsInView": 192,
+      "mapped": 168,
       "skipped": 24
     }
   ],
@@ -106,7 +106,7 @@
       ]
     }
   ],
-  "mappedLocations": 248,
+  "mappedLocations": 249,
   "locations": [
     {
       "recordId": "recjgAmRBw69T7gBr",
@@ -3835,6 +3835,22 @@
       "addressState": "NY",
       "addressZip": "13224",
       "addressCountry": "United States of America"
+    },
+    {
+      "recordId": "recTMBYWLoHT7NDmK",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 445. Carol Watson Greenhouse & Garden Center",
+      "youtubeLink": "https://youtu.be/uhcCMXXc1Bw",
+      "mapCategory": "Garden Center",
+      "lat": 42.916069108752744,
+      "lng": -76.11113622886143,
+      "address": "2980 Sentinel Heights Road, LaFayette, NY, 13084, United States or America",
+      "addressStreet": "2980 Sentinel Heights Road",
+      "addressTown": "LaFayette",
+      "addressState": "NY",
+      "addressZip": "13084",
+      "addressCountry": "United States or America"
     },
     {
       "recordId": "recOZDZ3EWhwaN4OX",
