@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-19T03:22:20.780143+00:00",
+  "updatedAt": "2026-11-19T12:59:00.556220+00:00",
   "sources": [
     {
       "channel": "flock",
@@ -11,8 +11,8 @@
     {
       "channel": "poom",
       "label": "Plant One On Me",
-      "recordsInView": 192,
-      "mapped": 168,
+      "recordsInView": 193,
+      "mapped": 169,
       "skipped": 24
     }
   ],
@@ -106,7 +106,7 @@
       ]
     }
   ],
-  "mappedLocations": 249,
+  "mappedLocations": 250,
   "locations": [
     {
       "recordId": "recjgAmRBw69T7gBr",
@@ -3850,6 +3850,22 @@
       "addressTown": "LaFayette",
       "addressState": "NY",
       "addressZip": "13084",
+      "addressCountry": "United States or America"
+    },
+    {
+      "recordId": "reczVhTnFPq6fgNA8",
+      "channel": "poom",
+      "channelLabel": "Plant One On Me",
+      "episodeName": "Ep 446. Lyndon Lyon Gesneriad Greenhouse",
+      "youtubeLink": "https://youtu.be/7eT9aQDbLgo",
+      "mapCategory": "Garden Center",
+      "lat": 43.09824501330286,
+      "lng": -74.77061206038685,
+      "address": "14 Mutchler St, Dolgeville, NY, 13329, United States or America",
+      "addressStreet": "14 Mutchler St",
+      "addressTown": "Dolgeville",
+      "addressState": "NY",
+      "addressZip": "13329",
       "addressCountry": "United States or America"
     },
     {
